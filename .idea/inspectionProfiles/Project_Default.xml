@@ -1,0 +1,63 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="6">
+            <item index="0" class="java.lang.String" itemvalue="link" />
+            <item index="1" class="java.lang.String" itemvalue="active" />
+            <item index="2" class="java.lang.String" itemvalue="%}" />
+            <item index="3" class="java.lang.String" itemvalue="if" />
+            <item index="4" class="java.lang.String" itemvalue="{%" />
+            <item index="5" class="java.lang.String" itemvalue="endif" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PyArgumentListInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="E731" />
+          <option value="E266" />
+          <option value="E203" />
+          <option value="E701" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N802" />
+          <option value="N801" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="flask_orm.Node.*" />
+          <option value="flask_orm.*" />
+          <option value="lippy.LPAREN" />
+          <option value="lippy.*" />
+          <option value="components.NEWLINE" />
+          <option value="components.SPACE" />
+          <option value="components.TAB" />
+          <option value="components.RETURN" />
+          <option value="RTN" />
+          <option value="enum.Enum.float" />
+          <option value="enum.Enum.*" />
+          <option value="dataclasses.Field._MISSING_TYPE" />
+          <option value="pak.PrototypeMixin.__getitem__" />
+          <option value="pak.PrototypeMixin.*" />
+          <option value="simple_app.Events.pump" />
+          <option value="injectables.Plugins.keys" />
+          <option value="injectables.Plugins.values" />
+          <option value="system.injectables.DT.tick" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
