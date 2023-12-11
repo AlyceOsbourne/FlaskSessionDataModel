@@ -13,9 +13,9 @@ seamlessly integrates with Flask sessions.
 ### EncryptedSessionData Class
 
 Extending the capabilities of `SessionData`, the `EncryptedSessionData` subclass overrides the encode and decode methods
-to encrypt and decrypt session data. The secret key is used as the encryption key, and as such, the secret key should be 
-32 base64-encodable bytes.
-If you are unsure, you can pad the bytes with `=` until the length is 32.
+to encrypt and decrypt session data. The secret key is used as the encryption key. This is useful for when you want to
+store sensitive data in the session, I do recommend in the cases where you wish to store sensitive data, make use of 
+server side sessions.
 
 ### init_app Function
 
