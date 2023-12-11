@@ -86,8 +86,5 @@ This module is compatible with Python 3.8 or later and relies on the following P
 This module is compatible with Flask-Session due to it using the same session interface,  this can further simplify
 how you use server side sessions. 
 
-
-## License
-
-This project is licensed under the MIT license for your convenience. Feel free to explore and adapt it to suit your
-needs.
+GNU Lesser General Public License v3.0
+PAK is licensed under the GNU General Public License v3.0. See the LICENSE file for more information.
