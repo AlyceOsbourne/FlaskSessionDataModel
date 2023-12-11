@@ -1,6 +1,6 @@
 # Flask Session Data Module
 
-Welcome to the Flask Session Data module, a robust tool designed for efficient session data management in your Flask
+Welcome to the Flask Session Data module, a tool designed for efficient session data management in your Flask
 applications. The `sessiondata.py` file provided in this repository contains classes, functions, and utilities that
 streamline the handling of session data within Flask.
 
@@ -47,7 +47,8 @@ In the provided example, a `User` session data class is defined with a `theme` a
 subsequently initialized with this session data class.
 
 To modify session data, use the `.session` context manager of the SessionData (or subclass). This provides a modifiable
-SessionData object, and upon exiting the context, the data is stored to the user's client.
+SessionData object, and upon exiting the context, the data is stored to the user's client, 
+only if the data had been modified (or a new instance was created).
 
 Accessing data in templates is straightforward. For instance:
 
@@ -69,6 +70,12 @@ This module is compatible with Python 3.8 or later and relies on the following P
 
 - Flask
 - cryptography
+
+
+## Compatibility
+This module is compatible with Flask-Session due to it using the same session interface,  this can further simplify
+how you use server side sessions. 
+
 
 ## License
 
