@@ -99,7 +99,7 @@ def init_app(app):
     if session_data_classes and not app.secret_key:
         raise ValueError('Secret key not set')
 
-    if app.config.get('BUILD_SESSION_DATA_ENDPOINTS', session_data_classes):
+    if app.config.get('SESSION_DATA_API_ENABLED', session_data_classes):
         for k, v in session_data_classes.items():
             if not issubclass(v, SessionData):
                 raise TypeError(f'Expected subclass of SessionData, got {v}')
@@ -138,6 +138,18 @@ def init_app(app):
         def inject_session_data():
             with session_builder(**session_data_classes) as session_data:
                 return session_data
+
+class SessionDataHandler:
+    def __init__(self, app=None):
+        self.app = app
+        if app is not None:
+            self.init_app(app)
+            
+    def init_app(self, app):
+        init_app(app)
+        app.extensions['session_data_handler'] = self
+        
+
 
 
 if __name__ == '__main__':

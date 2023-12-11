@@ -15,7 +15,7 @@ seamlessly integrates with Flask sessions.
 Extending the capabilities of `SessionData`, the `EncryptedSessionData` subclass overrides the encode and decode methods
 to encrypt and decrypt session data. The secret key is used as the encryption key. This is useful for when you want to
 store sensitive data in the session, I do recommend in the cases where you wish to store sensitive data, make use of 
-server side sessions.
+server side sessions. You only need to install the cryptography package if you wish to use this class.
 
 ### init_app Function
 
@@ -25,7 +25,8 @@ function also configures endpoints for retrieving session data and injects the d
 ## Usage
 
 To effectively leverage this module, define your own session data classes that inherit from either `SessionData`
-or `EncryptedSessionData`. Then, initialize your Flask application by passing these classes to the `init_app` function.
+or `EncryptedSessionData`. Then, add your classes to the app configuration in a dict with the key `'SESSION_DATA_CLASSES'`.
+Then call `init_app` with your Flask app.
 
 Here's an example:
 
@@ -65,16 +66,20 @@ Accessing data in templates is straightforward. For instance:
 {% endif %}
 ```
 
+This feature can be disabled by setting the `INJECT_SESSION_DATA` config value to `False`.
+
 Additionally, a developer API endpoint is available to view session data. Following the example, the endpoint would
 be `/api/user`, returning a JSON object with the session data. This also supports querying individual and multiple
 attributes, e.g., `/api/user?theme` and `/api/user?theme&name`.
+
+This can be disabled by setting the `SESSION_DATA_API_ENABLED` config value to `False`.
 
 ## Requirements
 
 This module is compatible with Python 3.8 or later and relies on the following Python packages:
 
 - Flask
-- cryptography
+- cryptography (optional)
 
 
 ## Compatibility
