@@ -120,7 +120,6 @@ def init_app(app):
                     return flask.jsonify(data.__dict__)
             
             app.add_url_rule(f'/api/session/{k}', f'session_data_get_{k}', session_data_get, methods = ['GET'])
-
             
             if hasattr(v, '__settable_keys__'):
                 settable_keys = v.__settable_keys__
@@ -132,6 +131,7 @@ def init_app(app):
                             else:
                                 return {'error': f'No such attribute: {_k}'}, 404
                         return flask.jsonify(data.__dict__)
+                    
                 app.add_url_rule(f'/api/session/{k}', f'session_data_post_{k}', session_data_post, methods = ['POST'])
         
         if not any(r.rule == '/api/routes' for r in app.url_map.iter_rules()):
@@ -189,7 +189,15 @@ if __name__ == '__main__':
         with User.session() as user:
             if flask.request.method == 'POST':
                 user.theme = flask.request.form['theme']
-        return flask.render_template_string('<form method="post"><select name="theme">{% for theme in themes %}<option{% if user.theme == theme %} selected{% endif %}>{{ theme }}</option>{% endfor %}</select><input type="submit"></form>', themes = themes)
-    
+        return flask.render_template_string('''
+        <form method="post">
+            <select name="theme">
+                {% for theme in themes %}
+                    <option{% if user.theme == theme %} selected{% endif %}>{{ theme }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit">
+        </form>
+        ''', themes = themes)
     
     app.run(debug = True)
