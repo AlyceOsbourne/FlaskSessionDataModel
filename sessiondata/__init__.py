@@ -65,7 +65,6 @@ class SessionData(types.SimpleNamespace, typing.MutableMapping):
     __repr__ = lambda self: repr(self.__dict__)
     __str__ = types.SimpleNamespace.__repr__
 
-
 class EncryptedSessionData(SessionData):
     @classmethod
     @property
@@ -84,7 +83,6 @@ class EncryptedSessionData(SessionData):
     @classmethod
     def decode(cls, string):
         return cls.__decode__(base64.b85decode(cls.fernet.decrypt(bytes.fromhex(string))))
-
 
 @contextlib.contextmanager
 def session_builder(**session_data_classes):
@@ -120,8 +118,21 @@ def init_app(app):
                                 if k not in data:
                                     return {'error': f'No such attribute: {k}'}, 404
                     return flask.jsonify(data.__dict__)
-
+            
             app.add_url_rule(f'/api/session/{k}', f'session_data_get_{k}', session_data_get, methods = ['GET'])
+
+            
+            if hasattr(v, '__settable_keys__'):
+                settable_keys = v.__settable_keys__
+                def session_data_post():
+                    with v.session() as data:
+                        for _k, _v in flask.request.json.items():
+                            if _k in settable_keys:
+                                setattr(data, _k, _v)
+                            else:
+                                return {'error': f'No such attribute: {_k}'}, 404
+                        return flask.jsonify(data.__dict__)
+                app.add_url_rule(f'/api/session/{k}', f'session_data_post_{k}', session_data_post, methods = ['POST'])
         
         if not any(r.rule == '/api/routes' for r in app.url_map.iter_rules()):
             @app.route('/api/routes')
