@@ -4,9 +4,7 @@ setup(
     name='FlaskSessionDataModel',
     version='1',
     packages=['sessiondata'],
-    url='',
+    url='https://github.com/AlyceOsbourne/FlaskSessionDataModel',
     license='MIT',
     author='Alyce Osbourne',
-    author_email='',
-    description=''
 )
