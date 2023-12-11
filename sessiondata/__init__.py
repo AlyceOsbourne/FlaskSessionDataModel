@@ -23,7 +23,7 @@ class SessionData(types.SimpleNamespace, typing.MutableMapping):
 
     @typing.final
     def __encode__(self):
-        return json.dumps(self.__dict__).encode()
+        return json.dumps(self.__dict__, default = lambda o: o.__dict__).encode()
 
     def encode(self):
         """Override this function if you wish to change the encoding method."""
@@ -148,14 +148,14 @@ class SessionDataHandler:
     def init_app(self, app):
         init_app(app)
         app.extensions['session_data_handler'] = self
-        
-
-
 
 if __name__ == '__main__':
     
     class User(SessionData):
         theme: str = 'light'
+        metadata: dict = {
+                'favorite_color': 'blue'
+        }
         
     app = flask.Flask(__name__)
     app.secret_key = 'secret'
@@ -166,7 +166,7 @@ if __name__ == '__main__':
     @app.route('/')
     def index():
         flask.session.clear()
-        return flask.render_template_string('{{ session }}')
+        return flask.render_template_string('{{ session }}<br>{{ user }}')
     
     app.run(debug=True)
     
