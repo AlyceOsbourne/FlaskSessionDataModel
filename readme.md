@@ -79,6 +79,7 @@ This can be disabled by setting the `SESSION_DATA_API_ENABLED` config value to `
 This module is compatible with Python 3.8 or later and relies on the following Python packages:
 
 - Flask
+- bson
 - cryptography (optional)
 
 
