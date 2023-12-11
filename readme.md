@@ -50,6 +50,11 @@ To modify session data, use the `.session` context manager of the SessionData (o
 SessionData object, and upon exiting the context, the data is stored to the user's client, 
 only if the data had been modified (or a new instance was created).
 
+```python
+with User.session() as user:
+    user.theme = 'dark'
+```
+
 Accessing data in templates is straightforward. For instance:
 
 ```html
