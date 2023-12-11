@@ -1,7 +1,8 @@
 import functools
-import types, typing, json, contextlib, base64, re
+import types, typing, contextlib, base64, re
 import copy
 import flask
+import bson
 
 camel_to_snake = lambda s: re.sub(r'(?<!^)(?=[A-Z])', '_', s).lower()
 
@@ -22,8 +23,10 @@ class SessionData(types.SimpleNamespace, typing.MutableMapping):
         flask.session.modified = True
 
     @typing.final
-    def __encode__(self):
-        return json.dumps(self.__dict__, default = lambda o: o.__dict__).encode()
+    def __encode__(self)->bytes:
+        return bson.dumps(
+                self, 
+        )
 
     def encode(self):
         """Override this function if you wish to change the encoding method."""
@@ -31,8 +34,8 @@ class SessionData(types.SimpleNamespace, typing.MutableMapping):
 
     @typing.final
     @classmethod
-    def __decode__(cls, string):
-        return json.loads(string.decode(), object_hook = lambda d: cls(**d))
+    def __decode__(cls, string)->'SessionData':
+        return cls(**bson.loads(string))
 
     @classmethod
     def decode(cls, string):
@@ -61,6 +64,7 @@ class SessionData(types.SimpleNamespace, typing.MutableMapping):
     __len__ = lambda self: len(self.__dict__)
     __repr__ = lambda self: repr(self.__dict__)
     __str__ = types.SimpleNamespace.__repr__
+
 
 class EncryptedSessionData(SessionData):
     @classmethod
@@ -168,7 +172,13 @@ if __name__ == '__main__':
         flask.session.clear()
         return flask.render_template_string('{{ session }}<br>{{ user }}')
     
-    app.run(debug=True)
+    @app.route('/theme', methods = ['GET', 'POST'])
+    def theme():
+        themes = ['light', 'dark']
+        with User.session() as user:
+            if flask.request.method == 'POST':
+                user.theme = flask.request.form['theme']
+        return flask.render_template_string('<form method="post"><select name="theme">{% for theme in themes %}<option{% if user.theme == theme %} selected{% endif %}>{{ theme }}</option>{% endfor %}</select><input type="submit"></form>', themes = themes)
     
     
-    
+    app.run(debug = True)
